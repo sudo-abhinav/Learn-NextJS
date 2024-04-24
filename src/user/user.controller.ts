@@ -1,17 +1,15 @@
-import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 
 import { jwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorator';
 import { user } from '@prisma/client';
 import { EditUser } from './dto';
 import { UserService } from './user.service';
-import { using } from 'rxjs';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
-constructor(private userService:UserService){}
-
+  constructor(private userService: UserService) {}
 
   @Get('test')
   @UseGuards(jwtGuard)
@@ -21,9 +19,20 @@ constructor(private userService:UserService){}
     return user;
   }
 
-  @Patch()
-  editUser(@GetUser('id') userId: number, @Body() Dto: EditUser)
-   {
-    return this.userService.editUser(userId, Dto)
-   }  
+  // adding findOne fund to find any particular user  user based on email
+  @ApiResponse({
+    status: 201,
+    description: 'The record is sucessfully created',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.userService.findOne(+id);
+  }
+
+  @Patch(':id')
+  // async editUser(@GetUser(@Param() 'id') userId: number, @Body() Dto: EditUser) {
+  async editUser(@Param('id') userId:number ,  @Body() Dto: EditUser) {
+    return await this.userService.editUser(userId, Dto);
+  }
 }

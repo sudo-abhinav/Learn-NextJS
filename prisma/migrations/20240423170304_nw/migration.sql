@@ -7,7 +7,7 @@ CREATE TABLE `users` (
     `hash` VARCHAR(191) NOT NULL,
     `firstName` VARCHAR(191) NULL,
     `lastName` VARCHAR(191) NULL,
-    `contactNo` INTEGER NULL,
+    `age` INTEGER NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -18,7 +18,7 @@ CREATE TABLE `bookmarks` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAtt` DATETIME(3) NOT NULL,
-    `title` VARCHAR(191) NULL,
+    `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
     `link` VARCHAR(191) NOT NULL,
     `userId` INTEGER NOT NULL,

@@ -4,6 +4,7 @@
 //     password : string
 // }
 
+import { ApiProperty } from "@nestjs/swagger"
 import { IsEmail, IsEmpty, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 
 
@@ -11,31 +12,47 @@ import { IsEmail, IsEmpty, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } f
 // ! so i have to convert interface to class
 
 export class Authdto{ 
+
+    @ApiProperty({
+        example:"dummy@xyz.com",
+        required:true
+    })
     @IsEmail()
     @IsNotEmpty()
     email :string
-
-   
+// -----------
+    @ApiProperty({
+        example:"pwd",
+        required:true
+    })
     @IsString()
     @IsNotEmpty()
     password:string
 
+    @ApiProperty({
+    example:"Abhinav",
+    required:true
+    })
+    @IsString()
+    @IsNotEmpty()
+    firstName:string
+
+    @ApiProperty({
+        example:"kumar",
+       required:false
+        })
     @IsString()
     @IsOptional()
-    // @IsNotEmpty()
-    firstName?:string
+    lastName?:string
 
-    @IsString()
-    @IsOptional()
-    lastName:string
-
-    // @IsNumber()
+    
+    @ApiProperty({
+        example:27,
+        required:false
+    })
     @IsInt()
     @IsOptional()
-    contactNo:number
-    // contactNo:
-
-
+    age?:number
 }
 
 

@@ -1,8 +1,10 @@
 
 /* eslint-disable prettier/prettier */
-import { Controller, Post , Get, Req, Body, ParseIntPipe } from "@nestjs/common";
+import { Controller, Post , Get, Req, Body, ParseIntPipe, HttpCode, HttpStatus } from "@nestjs/common";
 import { AuthServices } from "./auth.services";
 import { Authdto } from "./dto";
+import { ApiBody, ApiResponse } from "@nestjs/swagger";
+
 
 // import { get } from "http";
 // import { json } from "stream/consumers";
@@ -22,6 +24,12 @@ export class AuthController{
     }
 
     // POST /auth/signup
+@ApiResponse({status:201 , description:'The record is sucessfully created'})
+@ApiResponse({status:403 , description:'Forbidden'})
+@ApiBody({
+    type:Authdto,
+    description:'Json structure for user object'
+})
 @Post('signup')
 signup(@Body() authDto:Authdto){
     return this.authServices.signup(authDto)
@@ -37,12 +45,20 @@ signup(@Body() authDto:Authdto){
 //     return this.authServices.signin()
 // }
 
+@HttpCode(HttpStatus.OK)
 @Post('signin')
 // POST /auth/signin
 signin(@Body() authDto:Authdto) {    
     return this.authServices.signin(authDto)
 }
 
+
+// @Get('allData')
+// // * here we can pass multiple endpoint as a parameter in single array....
+// userdata(){
+    
+// return this.authServices.getAllData()
+// }
 
 
 // @Post('signin')
@@ -67,27 +83,10 @@ signin(@Body() authDto:Authdto) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Get('data')
-getData(){
-return {name:'abhinav',
-        age:23,
-        subject:'computer'
-}
-}
+// @Get(['data' , 'tausif' , 'abhinav'])
+// // * here we can pass multiple endpoint as a parameter in single array....
+// getData(){
+// return 'yello'
+// }
     
 }

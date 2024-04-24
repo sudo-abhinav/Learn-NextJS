@@ -25,7 +25,7 @@ model user{
   firstName String?
   lastName String?
 
-  contactNo Int?
+  age Int?
   
 
 @@map("users")
@@ -37,7 +37,7 @@ model bookmark{
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAtt DateTime @updatedAt()
-  title String?
+  title String
   description String?
   link String
 

@@ -1,12 +1,22 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 
 import { jwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorator';
 import { user } from '@prisma/client';
 import { EditUser } from './dto';
 import { UserService } from './user.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('User EndPoint')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -14,12 +24,14 @@ export class UserController {
   @Get('test')
   @UseGuards(jwtGuard)
   // ? here am using aome pre-define guard
-  getMe(@GetUser() user: user) {
+  // getMe(@GetUser() user: user) {
+  getMe() {
     // ! here am using custom decorator
-    return user;
+    // delete user.hash
+    return this.userService.fineAll();
   }
 
-  // adding findOne fund to find any particular user  user based on email
+  // adding findOne fund to find any particular user  user based on id
   @ApiResponse({
     status: 201,
     description: 'The record is sucessfully created',
@@ -32,7 +44,12 @@ export class UserController {
 
   @Patch(':id')
   // async editUser(@GetUser(@Param() 'id') userId: number, @Body() Dto: EditUser) {
-  async editUser(@Param('id') userId:number ,  @Body() Dto: EditUser) {
+  async editUser(@Param('id') userId: number, @Body() Dto: EditUser) {
     return await this.userService.editUser(userId, Dto);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') userId: number) {
+    return this.userService.deleteUser(+userId);
   }
 }

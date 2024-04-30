@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { EditUser } from './dto';
 import { PrismaClient } from '@prisma/client';
 
+
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
@@ -28,6 +29,11 @@ export class UserService {
   }
 
 
+   async fineAll(){
+    const dataAll = await this.prisma.user.findMany({})
+    return dataAll;
+   }
+
 
   async findOne(userId: number) {
     // this function work on fnding user based on id from DB
@@ -47,4 +53,25 @@ export class UserService {
 
     return {dataOne}
   }
+
+
+async deleteUser(userId:number){
+
+
+ const deletdata = await this.prisma.user.delete({
+  where:{
+    id:Number(userId)
+  }
+ });
+ return {
+  statusCode:200,
+  data:deletdata,
+  message:`sucess delete ${userId}`
+ }
+}
+
+
+
+
+
 }

@@ -3,7 +3,7 @@
 import { Controller, Post , Get, Req, Body, ParseIntPipe, HttpCode, HttpStatus } from "@nestjs/common";
 import { AuthServices } from "./auth.services";
 import { Authdto } from "./dto";
-import { ApiBody, ApiResponse } from "@nestjs/swagger";
+import { ApiBody, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 
 // import { get } from "http";
@@ -12,6 +12,7 @@ import { ApiBody, ApiResponse } from "@nestjs/swagger";
 
 
 // this where we are definig default route 
+@ApiTags('Auth EndPont')
 @Controller('auth')
 export class AuthController{
     constructor(private authServices:AuthServices){
@@ -45,6 +46,8 @@ signup(@Body() authDto:Authdto){
 //     return this.authServices.signin()
 // }
 
+@ApiResponse({status:201 , description:'The record is sucessfully created'})
+@ApiResponse({status:403 , description:'Forbidden'})
 @HttpCode(HttpStatus.OK)
 @Post('signin')
 // POST /auth/signin

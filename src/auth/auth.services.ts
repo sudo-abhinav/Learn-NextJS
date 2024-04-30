@@ -23,7 +23,6 @@ export class AuthServices {
 
   async signin(authdto: Authdto) {
     // find the user by email
-
     const user = await this.prisma.user.findFirst({
       where: {
         email: authdto.email,
@@ -34,19 +33,19 @@ export class AuthServices {
     // ? this is also called guard condition
     if (!user) throw new ForbiddenException('credential incorrrect');
 
-    // inernally argon matches the hash and user provided password then after we can run a guard check
+    // internally argon matches the hash and user provided password then after we can run a guard check
     const pwdMatch = await argon.verify(user.hash, authdto.password);
 
     if (!pwdMatch) throw new ForbiddenException('password incorrect');
 
     // ? now we can send that user object but remove the hash
     // ? it helps me to remove the hash pwd from user
-    return this.signToken(user.id, user.email );
-    // return user;
+    // return this.signToken(user.id, user.email );
+    delete user.hash;
+    return user;
   }
 
-  //   TODO signup services
-
+  //**** signup services ****//
   async signup(authDto: Authdto) {
     // ? it means whatever we get data from controller data is verfied from dto and validator
     const hash = await argon.hash(authDto.password);
@@ -68,10 +67,10 @@ export class AuthServices {
           // ? so we use select that provided by prisma , using prisma we can retrn selected item
         },
       });
-      // return this.signToken(user.id , user.email)
+      return await this.signToken(user.id, user.email);
       // ! save the new user in  db
-      delete user.hash;
-      return user;
+      // delete user.hash;
+      // return user;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -84,6 +83,7 @@ export class AuthServices {
     // ? return the save user
   }
 
+  // ** signToken **//
   async signToken(
     userId: number,
     email: string,
@@ -101,7 +101,6 @@ export class AuthServices {
       expiresIn: '60m',
       secret: secret,
     });
-
     return {
       access_token: token,
     };

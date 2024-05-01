@@ -13,6 +13,7 @@ async function bootstrap() {
   });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.setGlobalPrefix('api');
+  // * this is the glbal prefix e.g:- http://localhost:3030/api/auth/signin
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
 // }
@@ -32,10 +33,11 @@ async function bootstrap() {
   // ! swagger integration
 
   const configSwagger = new DocumentBuilder()
-    .setTitle('mybugy')
-    .setDescription('Docuemnt of awagger')
+    .setTitle('BookmarkApp')
+    .setDescription('Document of Swagger')
     .setVersion('1.0')
-    .addTag('dev')
+    .addBearerAuth()
+    .addTag('All EndPoint')
     .build();
 
   const document = SwaggerModule.createDocument(app, configSwagger);

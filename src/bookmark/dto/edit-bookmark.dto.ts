@@ -1,34 +1,33 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { IsEmpty, IsNotEmpty, IsOptional, IsString } from "class-validator"
 
-export class CreateBookmarkDto{
+export class EditBookmarkDto{
 
     @ApiProperty({
         example:"article about nestJs",
-        required:true,
-        description: 'add title ',
+        required:false,
+        description: 'update title ',
     })
     @IsString()
-    // @IsOptional()
-    @IsNotEmpty()
-    title:string
+    @IsOptional()
+    title?:string
 
 
     @ApiProperty({
-        example:"Description About Link",
-        required:false
+        example:"DEscribe your article about nestJs",
+        required:false,
+        description: 'Description about link ',
     })
     @IsString()
     @IsOptional()
     description?:string
 
-
     @ApiProperty({
         example:'https://www.youtube.com/',
-        required:true
+        required:false,
+        description: 'this where we put link',
     })
     @IsString()
-    // @IsOptional()
-    @IsNotEmpty()
-    link:string
+    @IsOptional()
+    link?:string
 }

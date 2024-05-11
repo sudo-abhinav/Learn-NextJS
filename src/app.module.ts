@@ -5,10 +5,13 @@ import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserFileUploadModule } from './user-file-upload/user-file-upload.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 
 
 @Module({
+  
   imports: [
     ConfigModule.forRoot({
       isGlobal:true,
@@ -19,7 +22,9 @@ import { UserFileUploadModule } from './user-file-upload/user-file-upload.module
     BookmarkModule,
     PrismaModule,
     UserFileUploadModule,
+    CloudinaryModule,
   
   ],
+  
 })
 export class AppModule {}

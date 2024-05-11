@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 // import { UserFileUploadModule } from './user-file-upload/user-file-upload.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { UploadModule } from './upload/upload.module';
 
 
 
@@ -23,6 +24,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     PrismaModule,
     // UserFileUploadModule,
     CloudinaryModule,
+    UploadModule,
   
   ],
   

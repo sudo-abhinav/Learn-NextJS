@@ -9,22 +9,17 @@ import { MulterModule } from '@nestjs/platform-express';
 // import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { UploadModule } from './upload/upload.module';
 
-
-
 @Module({
-  
   imports: [
     ConfigModule.forRoot({
-      isGlobal:true,
-      // * this global because anyone can use env file anywhwre  
+      isGlobal: true,
+      // * this global because anyone can use env file anywhwre
     }),
     AuthModule,
     UserModule,
     BookmarkModule,
     PrismaModule,
     UploadModule,
-  
   ],
-  
 })
 export class AppModule {}

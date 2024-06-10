@@ -40,9 +40,9 @@ export class AuthServices {
 
     // ? now we can send that user object but remove the hash
     // ? it helps me to remove the hash pwd from user
-    // return this.signToken(user.id, user.email );
-    delete user.hash;
-    return user;
+    return this.signToken(user.id, user.email);
+    // delete user.hash;
+    // return user;
   }
 
   //**** signup services ****//
@@ -67,10 +67,10 @@ export class AuthServices {
           // ? so we use select that provided by prisma , using prisma we can retrn selected item
         },
       });
-      return await this.signToken(user.id, user.email);
+      // return await this.signToken(user.id, user.email);
       // ! save the new user in  db
       // delete user.hash;
-      // return user;
+      return user;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {

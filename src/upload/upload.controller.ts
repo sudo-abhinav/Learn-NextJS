@@ -8,10 +8,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { text } from 'stream/consumers';
 import { UploadService } from './upload.service';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import multer from 'multer';
+import { response } from 'express';
 
 @Controller('upload')
 export class UploadController {
@@ -52,7 +52,10 @@ export class UploadController {
     file: Express.Multer.File,
   ) {
     // console.log(file);
-    return await this.uploadService.upload(file.originalname, file.buffer);
-    // return sta
+     await this.uploadService.upload(file.originalname, file.buffer);
+    if(this.uploadService.upload)
+      
+    return response.status(200);
+
   }
 }

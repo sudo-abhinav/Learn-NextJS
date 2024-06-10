@@ -9,13 +9,15 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 
-
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class jwtStrategy extends PassportStrategy(Strategy , 'jwt') {
-  constructor(config: ConfigService , private prisma:PrismaService) {
+export class jwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+  constructor(
+    config: ConfigService,
+    private prisma: PrismaService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       //   ignoreExpiration: false,
@@ -23,20 +25,17 @@ export class jwtStrategy extends PassportStrategy(Strategy , 'jwt') {
     });
   }
 
-
-// async validate(payload:{sub:number , email:string , firstName:string}){
-async validate(payload:{sub:number , email:string }){
-        const user  = await this.prisma.user.findUnique({
-            where:{
-                id:payload.sub
-            }
-        })
-        delete user.hash;
+  // async validate(payload:{sub:number , email:string , firstName:string}){
+  async validate(payload: { sub: number; email: string }) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: payload.sub,
+      },
+    });
+    delete user.hash;
     // return user;
     // * if i return user then i get all data excpt hash
     return payload;
     // * if i use retuen payload i'll get only selected that i mention in payload
-    
-}
-
+  }
 }

@@ -27,7 +27,7 @@ export class BookmarkController {
   }
 
   // Get/bookmark/2
-  @Get(':id')
+  @Get(':id') 
   getBookmarkById(
     @GetUser('id') userId: number,
     // ? we are using parseIntPipe because we got string id and we have convert into int

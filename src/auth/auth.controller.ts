@@ -1,4 +1,3 @@
-
 /* eslint-disable prettier/prettier */
 import { Controller, Post , Get, Req, Body, ParseIntPipe, HttpCode, HttpStatus } from "@nestjs/common";
 import { AuthServices } from "./auth.services";

@@ -12,6 +12,7 @@ constructor(config:ConfigService){
             db:{
                 // url:"mysql://root:1234@localhost:3306/nest",
                 url:config.get('DATABASE_URL'),
+                
             }
         }
     })

@@ -49,6 +49,7 @@ export class AuthServices {
   async signup(authDto: Authdto) {
     // ? it means whatever we get data from controller data is verfied from dto and validator
     const hash = await argon.hash(authDto.password);
+    
 
     //! generate the password hash using argon2
     // ? here am using try catch so we can handle duplicacy in catch section
